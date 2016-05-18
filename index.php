@@ -11,7 +11,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        echo "Tony Silva 2 ";
+        echo "Tony Silva ";
         ?>
     </body>
 </html>
