@@ -17,10 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   } else {
     // O usuário e/ou a senha são inválidos, manda de volta pro form de login
     // Para alterar o endereço da página de login, verifique o arquivo seguranca.php
-      echo 'falhou';
-    expulsaVisitante();
+      echo"<script language='javascript' type='text/javascript'>alert('Usuário ou senha não existe');window.location.href='../login.html';</script>";
+      die();
+    //expulsaVisitante();
   }
-} else{
-    alert('Usuário ou senha inválidos') ;
-    header("Location: ../login.html");
 }

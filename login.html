@@ -14,16 +14,6 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
-        <script type="text/javascript" language="javascript">
-            function valida_form() {
-                if (document.getElementById("email").value.length < 3) {
-                    alert('Por favor, preencha o campo Email');
-                    document.getElementById("email").focus();
-                    location.href = "login.html"
-                    return false;
-                }
-        </script>
-
     </head>
 
     <body>
@@ -36,14 +26,14 @@
                         <form class="" method="post" action="validacao/valida_login.php">	
                             <fieldset>
                                 <div class="form-group">
-                                    <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" >
+                                    <input id="email" class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password"  class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input id="password"  class="form-control" placeholder="Senha" name="password" type="password" value="" required>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Esqueci
+                                        <input name="remember" type="checkbox" value="Remember Me">Esqueci a senha
                                     </label>
                                 </div>
                                 <button  class="btn btn-primary" type="submit" >Login</button>
@@ -64,22 +54,23 @@
         <script src="js/easypiechart-data.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script>
-                                            !function ($) {
-                                                $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-                                                    $(this).find('em:first').toggleClass("glyphicon-minus");
-                                                });
-                                                $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-                                            }(window.jQuery);
+            !function ($) {
+                $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+                    $(this).find('em:first').toggleClass("glyphicon-minus");
+                });
+                $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+            }(window.jQuery);
 
-                                            $(window).on('resize', function () {
-                                                if ($(window).width() > 768)
-                                                    $('#sidebar-collapse').collapse('show')
-                                            })
-                                            $(window).on('resize', function () {
-                                                if ($(window).width() <= 767)
-                                                    $('#sidebar-collapse').collapse('hide')
-                                        }
-                                        )
+            $(window).on('resize', function () {
+                if ($(window).width() > 768)
+                    $('#sidebar-collapse').collapse('show')
+            })
+            $(window).on('resize', function () {
+                if ($(window).width() <= 767)
+                    $('#sidebar-collapse').collapse('hide')
+            }
+            )
+
         </script>	
     </body>
 
