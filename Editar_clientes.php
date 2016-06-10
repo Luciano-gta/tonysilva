@@ -164,7 +164,7 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 				    <button type="submit" class="btn btn-primary" id='botao'> 
 				      Gravar
 				    </button>
-				    <a href='index.php' class="btn btn-danger">Cancelar</a>
+                                    <a href='Dash.php' class="btn btn-danger">Cancelar</a>
 				</form>
 			<?php endif; ?>
 		</fieldset>
