@@ -5,7 +5,7 @@
 * Usado para restringir o acesso de certas páginas do  site
 *
 */
-include("..\classes\Conexao.php");
+include("./classes/Conexao1.php");
 
 //  Configurações do Script
 // ==============================
@@ -32,14 +32,14 @@ if ($_SG['abreSessao'] == true)
 * @return bool - Se o usuário foi validado ou não (true/false)
 */
 function validaUsuario($usuario, $senha) {
-  $db = new Conexao();
+  $db = new Conexao1();
   global $_SG;
   $cS = ($_SG['caseSensitive']) ? 'BINARY' : '';
   // Usa a função addslashes para escapar as aspas
   $nusuario = addslashes($usuario);
   $nsenha = addslashes($senha);
   // Monta uma consulta SQL (query) para procurar um usuário
-  $sql = "SELECT `id`, `nome` FROM `".$_SG['tabela']."` WHERE ".$cS." `usuario` = '".$nusuario."' AND ".$cS." `senha` = '".$nsenha."' LIMIT 1";
+  $sql = "SELECT `usu_id`, `usu_nome` FROM `".$_SG['tabela']."` WHERE ".$cS." `usu_email` = '".$nusuario."' AND ".$cS." `usu_senha` = '".$nsenha."' LIMIT 1";
   $query = $db->executeQuery($sql);//mysql_query($sql) or die(mysql_error());
   $resultado = mysql_fetch_assoc($query);
   // Verifica se encontrou algum registro
@@ -48,8 +48,8 @@ function validaUsuario($usuario, $senha) {
     return false;
   } else {
     // Definimos dois valores na sessão com os dados do usuário
-    $_SESSION['usuarioID'] = $resultado['id']; // Pega o valor da coluna 'id do registro encontrado no MySQL
-    $_SESSION['usuarioNome'] = $resultado['nome']; // Pega o valor da coluna 'nome' do registro encontrado no MySQL
+    $_SESSION['usuarioID'] = $resultado['usu_id']; // Pega o valor da coluna 'id do registro encontrado no MySQL
+    $_SESSION['usuarioNome'] = $resultado['usu_nome']; // Pega o valor da coluna 'nome' do registro encontrado no MySQL
     // Verifica a opção se sempre validar o login
     if ($_SG['validaSempre'] == true) {
       // Definimos dois valores na sessão com os dados do login

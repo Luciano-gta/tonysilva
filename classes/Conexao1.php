@@ -10,7 +10,7 @@ if (eregi("conexao.php", "$checkurl")) {
     header("Location: ../login.html");
 }
 
-class Conexao {
+class Conexao1 {
 
     var $host = "localhost";
     var $user = "root";

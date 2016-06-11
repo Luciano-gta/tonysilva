@@ -15,19 +15,7 @@
             $stm = $conexao->prepare($sql);
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
-
-        else:
-
-            // Executa uma consulta baseada no termo de pesquisa passado como parâmetro
-            $conexao = conexao::getInstance();
-            $sql = 'SELECT id, nome, email, celular, status, foto FROM tab_clientes WHERE nome LIKE :nome OR email LIKE :email';
-            $stm = $conexao->prepare($sql);
-            $stm->bindValue(':nome', $termo . '%');
-            $stm->bindValue(':email', $termo . '%');
-            $stm->execute();
-            $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
-
-        endif;
+     endif;
         ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -4,7 +4,8 @@
     <?php
     // Inclui o arquivo com o sistema de seguran�a
     require_once('./classes/Conexao.php');
-   
+    require_once('dao/seguranca.php');
+    protegePagina();
 // Recebe o id do cliente do cliente via GET
 $id_cliente = (isset($_GET['id'])) ? $_GET['id'] : '';
 
@@ -13,7 +14,7 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 
 	// Captura os dados do cliente solicitado
 	$conexao = conexao::getInstance();
-	$sql = 'SELECT id, nome, email, cpf, data_nascimento, telefone, celular, status, foto FROM tab_clientes WHERE id = :id';
+	$sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto FROM clientes WHERE cli_codigo = :id';
 	$stm = $conexao->prepare($sql);
 	$stm->bindValue(':id', $id_cliente);
 	$stm->execute();
@@ -22,7 +23,7 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 	if(!empty($cliente)):
 
 		// Formata a data no formato nacional
-		$array_data     = explode('-', $cliente->data_nascimento);
+		$array_data     = explode('-', $cliente->cli_data_nascimento);
 		$data_formatada = $array_data[2] . '/' . $array_data[1] . '/' . $array_data[0];
 
 	endif;
@@ -110,7 +111,7 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 						<label for="nome">Alterar Foto</label>
 				      	<div class="col-md-2">
 						    <a href="#" class="thumbnail">
-						      <img src="fotos/<?=$cliente->foto?>" height="190" width="150" id="foto-cliente">
+						      <img src="fotos/<?=$cliente->cli_foto?>" height="190" width="150" id="foto-cliente">
 						    </a>
 					  	</div>
 					  	<input type="file" name="foto" id="foto" value="foto" >
@@ -118,19 +119,19 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 
 				    <div class="form-group">
 				      <label for="nome">Nome</label>
-				      <input type="text" class="form-control" id="nome" name="nome" value="<?=$cliente->nome?>" placeholder="Infome o Nome">
+				      <input type="text" class="form-control" id="nome" name="nome" value="<?=$cliente->cli_nome?>" placeholder="Infome o Nome">
 				      <span class='msg-erro msg-nome'></span>
 				    </div>
 
 				    <div class="form-group">
 				      <label for="email">E-mail</label>
-				      <input type="email" class="form-control" id="email" name="email" value="<?=$cliente->email?>" placeholder="Informe o E-mail">
+				      <input type="email" class="form-control" id="email" name="email" value="<?=$cliente->cli_email?>" placeholder="Informe o E-mail">
 				      <span class='msg-erro msg-email'></span>
 				    </div>
 
 				    <div class="form-group">
 				      <label for="cpf">CPF</label>
-				      <input type="cpf" class="form-control" id="cpf" maxlength="14" name="cpf" value="<?=$cliente->cpf?>" placeholder="Informe o CPF">
+				      <input type="cpf" class="form-control" id="cpf" maxlength="14" name="cpf" value="<?=$cliente->cli_cpf?>" placeholder="Informe o CPF">
 				      <span class='msg-erro msg-cpf'></span>
 				    </div>
 				    <div class="form-group">
@@ -140,18 +141,18 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 				    </div>
 				    <div class="form-group">
 				      <label for="telefone">Telefone</label>
-				      <input type="telefone" class="form-control" id="telefone" maxlength="12" name="telefone" value="<?=$cliente->telefone?>" placeholder="Informe o Telefone">
+				      <input type="telefone" class="form-control" id="telefone" maxlength="12" name="telefone" value="<?=$cliente->cli_telefone?>" placeholder="Informe o Telefone">
 				      <span class='msg-erro msg-telefone'></span>
 				    </div>
 				    <div class="form-group">
 				      <label for="celular">Celular</label>
-				      <input type="celular" class="form-control" id="celular" maxlength="13" name="celular" value="<?=$cliente->celular?>" placeholder="Informe o Celular">
+				      <input type="celular" class="form-control" id="celular" maxlength="13" name="celular" value="<?=$cliente->cli_celular?>" placeholder="Informe o Celular">
 				      <span class='msg-erro msg-celular'></span>
 				    </div>
 				    <div class="form-group">
 				      <label for="status">Status</label>
 				      <select class="form-control" name="status" id="status">
-					    <option value="<?=$cliente->status?>"><?=$cliente->status?></option>
+					    <option value="<?=$cliente->cli_status?>"><?=$cliente->cli_status?></option>
 					    <option value="Ativo">Ativo</option>
 					    <option value="Inativo">Inativo</option>
 					  </select>
@@ -159,8 +160,8 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 				    </div>
 
 				    <input type="hidden" name="acao" value="editar">
-				    <input type="hidden" name="id" value="<?=$cliente->id?>">
-				    <input type="hidden" name="foto_atual" value="<?=$cliente->foto?>">
+				    <input type="hidden" name="id" value="<?=$cliente->cli_codigo?>">
+				    <input type="hidden" name="foto_atual" value="<?=$cliente->cli_foto?>">
 				    <button type="submit" class="btn btn-primary" id='botao'> 
 				      Gravar
 				    </button>

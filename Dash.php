@@ -3,7 +3,9 @@
     <head>
         <?php
         require './classes/Conexao.php';
-
+        require_once('dao/seguranca.php');
+    protegePagina();
+    
 // Recebe o termo de pesquisa se existir
         $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
 
@@ -11,7 +13,7 @@
         if (empty($termo)):
 
             $conexao = conexao::getInstance();
-            $sql = 'SELECT id, nome, email, celular, status, foto FROM tab_clientes';
+            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes';
             $stm = $conexao->prepare($sql);
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -20,7 +22,7 @@
 
             // Executa uma consulta baseada no termo de pesquisa passado como parâmetro
             $conexao = conexao::getInstance();
-            $sql = 'SELECT id, nome, email, celular, status, foto FROM tab_clientes WHERE nome LIKE :nome OR email LIKE :email';
+            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE nome LIKE :nome OR email LIKE :email';
             $stm = $conexao->prepare($sql);
             $stm->bindValue(':nome', $termo . '%');
             $stm->bindValue(':email', $termo . '%');
@@ -131,14 +133,14 @@
                             </tr>
                             <?php foreach ($clientes as $cliente): ?>
                                 <tr>
-                                    <td><img src='fotos/<?= $cliente->foto ?>' height='40' width='40'></td>
-                                    <td><?= $cliente->nome ?></td>
-                                    <td><?= $cliente->email ?></td>
-                                    <td><?= $cliente->celular ?></td>
-                                    <td><?= $cliente->status ?></td>
+                                    <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
+                                    <td><?= $cliente->cli_nome ?></td>
+                                    <td><?= $cliente->cli_email ?></td>
+                                    <td><?= $cliente->cli_telefone ?></td>
+                                    <td><?= $cliente->cli_status ?></td>
                                     <td>
-                                        <a href='Editar_clientes.php?id=<?= $cliente->id ?>' class="btn btn-primary">Editar</a>
-                                        <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->id ?>">Excluir</a>
+                                        <a href='Editar_clientes.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-primary">Editar</a>
+                                        <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->cli_codigo ?>">Excluir</a>
                                     </td>
                                 </tr>	
                             <?php endforeach; ?>

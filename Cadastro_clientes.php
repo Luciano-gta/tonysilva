@@ -3,8 +3,8 @@
 <head>
     <?php
     // Inclui o arquivo com o sistema de seguran�a
-   // require_once('dao/seguranca.php');
-   // protegePagina();
+    require_once('dao/seguranca.php');
+    protegePagina();
     ?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,19 +24,6 @@
 <style type="text/css">
 	.msg-erro{ color: red; }
 	</style>
-<script type="text/javascript" language="javascript">
-function valida_form (){
-if(document.getElementById("nome").value.length < 3){
-alert('Por favor, preencha o campo Email');
-document.getElementById("email").focus();
-location.href="login.html"
-return false;
-}else {
-    
-    location.href="index.html"  
-}
-}
-</script>
 </head>
 
 <body>
