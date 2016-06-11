@@ -3,7 +3,7 @@
     <head>
         <?php
         require './classes/Conexao.php';
-
+        
 // Recebe o termo de pesquisa se existir
         $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
 
@@ -11,7 +11,7 @@
         if (empty($termo)):
 
             $conexao = conexao::getInstance();
-            $sql = 'SELECT id, nome, email, celular, status, foto FROM tab_clientes';
+            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_celular, cli_status, cli_foto FROM clientes where Month(cli_data_nascimento) = Month(Now())';
             $stm = $conexao->prepare($sql);
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -71,7 +71,8 @@
             </form>
             <ul class="nav menu">
                 <li class="active"><a href="Dash.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Inicio</a></li>
-                <li class="active"><a href="Dash.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
+                <li role="presentation" class="divider"></li>
+                <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
                 <li role="presentation" class="divider"></li>
                 <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
             </ul>
@@ -81,7 +82,7 @@
             <div class="row">
                 <ol class="breadcrumb">
                     <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-                    <li class="active">Dashboard</li>
+                    <li class="active">Listagem Aniversatiantes</li>
                 </ol>
             </div><!--/.row-->
 
@@ -89,7 +90,7 @@
                 <fieldset>
 
                     <!-- Cabeçalho da Listagem -->
-                    <legend><h1>Listagem de Clientes</h1></legend>
+                    <legend><h1>Listagem de Aniversariantes </h1></legend>
 
                     <!-- Formulário de Pesquisa -->
                     <form action="" method="get" id='form-contato' class="form-horizontal col-md-10">
@@ -102,14 +103,14 @@
                     </form>
 
                     <!-- Link para página de cadastro -->
-                    <a href='Cadastro_clientes.php' class="btn btn-success pull-right">Cadastrar Cliente</a>
+
                     <div class='clearfix'></div>
 
                     <?php if (!empty($clientes)): ?>
 
                         <!-- Tabela de Clientes -->
                         <table class="table table-striped">
-                            <tr class='active'>
+                            <tr class='active' >
                                 <th>Foto</th>
                                 <th>Nome</th>
                                 <th>E-mail</th>
@@ -119,14 +120,14 @@
                             </tr>
                             <?php foreach ($clientes as $cliente): ?>
                                 <tr>
-                                    <td><img src='fotos/<?= $cliente->foto ?>' height='40' width='40'></td>
-                                    <td><?= $cliente->nome ?></td>
-                                    <td><?= $cliente->email ?></td>
-                                    <td><?= $cliente->celular ?></td>
-                                    <td><?= $cliente->status ?></td>
+                                    <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
+                                    <td><?= $cliente->cli_nome ?></td>
+                                    <td><?= $cliente->cli_email ?></td>
+                                    <td><?= $cliente->cli_celular ?></td>
+                                    <td><?= $cliente->cli_status ?></td>
                                     <td>
-                                        <a href='Editar_clientes.php?id=<?= $cliente->id ?>' class="btn btn-primary">Editar</a>
-                                        <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->id ?>">Excluir</a>
+                                        <a href='Editar_clientes.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-primary">Editar</a>
+                                        <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->cli_codigo ?>">Excluir</a>
                                     </td>
                                 </tr>	
                             <?php endforeach; ?>
@@ -135,7 +136,10 @@
                     <?php else: ?>
 
                         <!-- Mensagem caso não exista clientes ou não encontrado  -->
-                        <h3 class="text-center text-primary">Não existem clientes cadastrados!</h3>
+                        <div class="alert alert-danger" role="alert">
+                        <strong>Atenção!</strong> Não existem Aniversariantes Para o mês Corrente!
+                        </div>
+                        <h3 class="text-center text-primary"></h3>
                     <?php endif; ?>
                 </fieldset>
             </div>
