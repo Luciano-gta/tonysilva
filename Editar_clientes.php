@@ -69,7 +69,7 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+                                                        <li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -177,7 +177,14 @@ if (!empty($id_cliente) && is_numeric($id_cliente)):
 
 					  <script type="text/javascript" src="js/custom.js"></script>
         
-   
+   <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script>
+  $(function () {
+    $('.dropdown-toggle').dropdown();
+  }); 
+</script>
+
 
         
 </body>

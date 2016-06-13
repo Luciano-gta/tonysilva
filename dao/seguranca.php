@@ -5,7 +5,15 @@
 * Usado para restringir o acesso de certas páginas do  site
 *
 */
-include("./classes/Conexao1.php");
+
+$pasta = dirname(__FILE__);
+
+// Teste
+//require_once($pasta."/db.inc.php");
+//Classes
+require_once($pasta."/../classes/Conexao1.php");
+
+
 
 //  Configurações do Script
 // ==============================
