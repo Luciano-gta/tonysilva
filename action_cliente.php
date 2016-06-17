@@ -24,8 +24,8 @@
 		$data_nascimento  = (isset($_POST['data_nascimento'])) ? $_POST['data_nascimento'] : '';
 		$telefone  		  = (isset($_POST['telefone'])) ? str_replace(array('-', ' '), '', $_POST['telefone']) : '';
 		$celular   		  = (isset($_POST['celular'])) ? str_replace(array('-', ' '), '', $_POST['celular']) : '';
-		$status    		  = (isset($_POST['status'])) ? $_POST['status'] : '';
-
+		$status    		  = (isset($_POST['status'])) ? $_POST['status'] : ''; 
+                $Pontos    		  = (isset($_POST['Pontos'])) ? $_POST['Pontos'] : '';
 
 		// Valida os dados recebidos
 		$mensagem = '';
@@ -240,7 +240,10 @@
 
 			echo "<meta http-equiv=refresh content='3;URL=Dash.php'>";
 		endif;
-		?>
+		
+                
+                
+                ?>
 
 	</div>
 </body>

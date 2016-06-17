@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+<script>
+    
+        </script>        
         <?php
         require './classes/Conexao.php';
         require_once('./dao/seguranca.php');
@@ -12,7 +15,7 @@
         if (empty($termo)):
 
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_celular, cli_status, cli_foto FROM clientes where Month(cli_data_nascimento) = Month(Now())';
+            $sql = 'SELECT cli_codigo, cli_visitas, cli_ptototal, (cli_ptototal - cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_celular, cli_status, cli_foto FROM clientes ;';
             $stm = $conexao->prepare($sql);
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -20,15 +23,16 @@
 
             // Executa uma consulta baseada no termo de pesquisa passado como parâmetro
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email';
+            $sql = 'SELECT cli_codigo, cli_visitas, cli_ptototal,(cli_ptototal - cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE nome LIKE :nome OR email LIKE :email';
             $stm = $conexao->prepare($sql);
-            $stm->bindValue(':cli_nome', $termo . '%');
-            $stm->bindValue(':cli_email', $termo . '%');
+            $stm->bindValue(':nome', $termo . '%');
+            $stm->bindValue(':email', $termo . '%');
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
 
         endif;
             
+       
         ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +67,7 @@
                     <a class="navbar-brand" href="#"><span>Tony Silva</span>Admin</a>
                     <ul class="user-menu">
                         <li class="dropdown pull-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo($_SESSION['usuarioNome'])?> <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo($_SESSION['usuarioNome']) ?> <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
                                 <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
@@ -95,7 +99,7 @@
             <div class="row">
                 <ol class="breadcrumb">
                     <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-                    <li class="active">Listagem Aniversatiantes</li>
+                    <li class="active">Pontuação</li>
                 </ol>
             </div><!--/.row-->
 
@@ -103,7 +107,7 @@
                 <fieldset>
 
                     <!-- Cabeçalho da Listagem -->
-                    <legend><h1>Listagem de Aniversariantes </h1></legend>
+                    <legend><h1>Pontuação</h1></legend>
 
                     <!-- Formulário de Pesquisa -->
                     <form action="" method="get" id='form-contato' class="form-horizontal col-md-10">
@@ -119,53 +123,58 @@
 
                     <div class='clearfix'></div>
 
-                    <?php if (!empty($clientes)): ?>
-
+<?php if (!empty($clientes)): ?>
+                    <form action="pontuar.php" method="get" name="form" >
                         <!-- Tabela de Clientes -->
                         <table class="table table-striped">
                             <tr class='active' >
                                 <th>Foto</th>
                                 <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Celular</th>
-                                <th>Status</th>
+                                <th>Visitas</th>
+                                <th>Pontos</th>
+                                <th>Disponivel</th>
+                                <th>Pontuar/Recolher</th>
                                 <th>Ação</th>
                             </tr>
-                            <?php foreach ($clientes as $cliente): ?>
+    <?php foreach ($clientes as $cliente): ?>
                                 <tr>
                                     <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
+                                    <input type="hidden" name="id" value="<?=$cliente->cli_codigo?>">
                                     <td><?= $cliente->cli_nome ?></td>
-                                    <td><?= $cliente->cli_email ?></td>
-                                    <td><?= $cliente->cli_celular ?></td>
-                                    <td><?= $cliente->cli_status ?></td>
+                                    <td><?= $cliente->cli_visitas?></td>
+                                    <td><?= $cliente->cli_ptototal?></td>
+                                    <td><?= $cliente->cli_ptodisp?></td>
+                                    <td><input id="pontos" name="pontos" type="text" ></td>
                                     <td>
-                                        <a href='Editar_clientes.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-primary">Editar</a>
-                                        <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->cli_codigo ?>">Excluir</a>
+                                        
+                                        <button type="submit" class="btn btn-primary " name="pontuar" value="pontua" onclick="validaval()" >Pontuar</button>>
+                                        <button type="submit" class="btn btn-danger " name="recolher" value="recolhe">Recolher</button>> 
                                     </td>
                                 </tr>	
-                            <?php endforeach; ?>
+    <?php endforeach; ?>
                         </table>
 
-                    <?php else: ?>
+                        <?php else: ?>
 
                         <!-- Mensagem caso não exista clientes ou não encontrado  -->
                         <div class="alert alert-danger" role="alert">
-                        <strong>Atenção!</strong> Não existem Aniversariantes Para o mês Corrente!
+                            <strong>Atenção!</strong> Não existem Aniversariantes Para o mês Corrente!
                         </div>
                         <h3 class="text-center text-primary"></h3>
-                    <?php endif; ?>
+<?php endif; ?>
+          </form>
                 </fieldset>
             </div>
 
             <script type="text/javascript" src="js/custom.js"></script>
 
-<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
-<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-<script>
-  $(function () {
-    $('.dropdown-toggle').dropdown();
-  }); 
-</script>
+            <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+            <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+            <script>
+                $(function () {
+                    $('.dropdown-toggle').dropdown();
+                   });
+            </script>
 
 
 
