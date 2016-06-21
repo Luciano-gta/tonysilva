@@ -24,8 +24,8 @@
 		$data_nascimento  = (isset($_POST['data_nascimento'])) ? $_POST['data_nascimento'] : '';
 		$telefone  		  = (isset($_POST['telefone'])) ? str_replace(array('-', ' '), '', $_POST['telefone']) : '';
 		$celular   		  = (isset($_POST['celular'])) ? str_replace(array('-', ' '), '', $_POST['celular']) : '';
-		$status    		  = (isset($_POST['status'])) ? $_POST['status'] : '';
-
+		$status    		  = (isset($_POST['status'])) ? $_POST['status'] : ''; 
+                $Pontos    		  = (isset($_POST['Pontos'])) ? $_POST['Pontos'] : '';
 
 		// Valida os dados recebidos
 		$mensagem = '';
@@ -122,8 +122,8 @@
 			     endif;  
 			endif;
 
-			$sql = 'INSERT INTO tab_clientes (nome, email, cpf, data_nascimento, telefone, celular, status, foto)
-							   VALUES(:nome, :email, :cpf, :data_nascimento, :telefone, :celular, :status, :foto)';
+			$sql = 'INSERT INTO clientes (cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto)
+                                        VALUES(:nome, :email, :cpf, :data_nascimento, :telefone, :celular, :status, :foto)';
 
 			$stm = $conexao->prepare($sql);
 			$stm->bindValue(':nome', $nome);
@@ -187,8 +187,8 @@
 
 			endif;
 
-			$sql = 'UPDATE tab_clientes SET nome=:nome, email=:email, cpf=:cpf, data_nascimento=:data_nascimento, telefone=:telefone, celular=:celular, status=:status, foto=:foto ';
-			$sql .= 'WHERE id = :id';
+			$sql = 'UPDATE clientes SET cli_nome=:nome, cli_email=:email, cli_cpf=:cpf, cli_data_nascimento=:data_nascimento, cli_telefone=:telefone, cli_celular=:celular, cli_status=:status, cli_foto=:foto ';
+			$sql .= 'WHERE cli_codigo = :id';
 
 			$stm = $conexao->prepare($sql);
 			$stm->bindValue(':nome', $nome);
@@ -216,7 +216,7 @@
 		if ($acao == 'excluir'):
 
 			// Captura o nome da foto para excluir da pasta
-			$sql = "SELECT foto FROM tab_clientes WHERE id = :id AND foto <> 'padrao.jpg'";
+			$sql = "SELECT cli_foto FROM clientes WHERE cli_codigo = :id AND cli_foto <> 'padrao.jpg'";
 			$stm = $conexao->prepare($sql);
 			$stm->bindValue(':id', $id);
 			$stm->execute();
@@ -227,7 +227,7 @@
 			endif;
 
 			// Exclui o registro do banco de dados
-			$sql = 'DELETE FROM tab_clientes WHERE id = :id';
+			$sql = 'DELETE FROM clientes WHERE cli_codigo = :id';
 			$stm = $conexao->prepare($sql);
 			$stm->bindValue(':id', $id);
 			$retorno = $stm->execute();
@@ -240,7 +240,10 @@
 
 			echo "<meta http-equiv=refresh content='3;URL=Dash.php'>";
 		endif;
-		?>
+		
+                
+                
+                ?>
 
 	</div>
 </body>

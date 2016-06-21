@@ -3,8 +3,8 @@
 <head>
     <?php
     // Inclui o arquivo com o sistema de seguran�a
-   // require_once('dao/seguranca.php');
-   // protegePagina();
+    require_once('dao/seguranca.php');
+    protegePagina();
     ?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,19 +24,6 @@
 <style type="text/css">
 	.msg-erro{ color: red; }
 	</style>
-<script type="text/javascript" language="javascript">
-function valida_form (){
-if(document.getElementById("nome").value.length < 3){
-alert('Por favor, preencha o campo Email');
-document.getElementById("email").focus();
-location.href="login.html"
-return false;
-}else {
-    
-    location.href="index.html"  
-}
-}
-</script>
 </head>
 
 <body>
@@ -56,7 +43,7 @@ return false;
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+                                                        <li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -149,7 +136,7 @@ return false;
 			    <button type="submit" class="btn btn-primary" id='botao'> 
 			      Gravar
 			    </button>
-			    <a href='index.php' class="btn btn-danger">Cancelar</a>
+			    <a href='Dash.php' class="btn btn-danger">Cancelar</a>
 			</form>
 		</fieldset>
 	</div>
@@ -163,6 +150,12 @@ return false;
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <link rel="stylesheet" href="/resources/demos/style.css">
 
+
+<script type="text/javascript">
+  $(function () {
+    $('.dropdown-toggle').dropdown();
+  }); 
+</script>
    
 <script type="text/javascript">
         $(function () {
