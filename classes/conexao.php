@@ -14,7 +14,7 @@
  */
 define('SGBD', 'mysql');
 define('HOST', 'localhost');
-define('DBNAME', 'tony');
+define('DBNAME', 'teste');
 define('CHARSET', 'utf8');
 define('USER', 'root');
 define('PASSWORD', '');
