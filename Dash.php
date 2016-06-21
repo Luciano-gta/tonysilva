@@ -97,6 +97,8 @@
                 <li role="presentation" class="divider"></li>
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
                 <li role="presentation" class="divider"></li>
+                <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Rel. Aniversariantes</a></li>
+                <li role="presentation" class="divider"></li>
                 <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
             </ul>
         </div><!--/.sidebar-->
