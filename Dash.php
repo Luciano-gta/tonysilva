@@ -97,7 +97,7 @@
                 <!--<li role="presentation" class="divider"></li> -->
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
                 <!--<li role="presentation" class="divider"></li> -->
-                <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Rel. Aniversariantes</a></li>
+                <!--<li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Rel. Aniversariantes</a></li>-->
                 <!-- <li role="presentation" class="divider"></li> -->
                 <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
             </ul>
@@ -187,7 +187,6 @@
                         <button type="submit" class="btn btn-primary">Pesquisar</button>
                         <a href='Cadastro_clientes.php' class="btn btn-success pull-right ">Cadastrar Cliente</a>
                         <a href='Dash.php' class="btn btn-primary">Ver Todos</a>
-                        <a href='Pontuacao.php' class="btn btn-warning">Pontuar</a>
                         <!-- Link para página de cadastro -->
                         
                     </form>
@@ -218,6 +217,7 @@
                                     <td>
                                         <a href='Editar_clientes.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-primary">Editar</a>
                                         <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->cli_codigo ?>">Excluir</a>
+                                        <a href='Pontuacao.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-warning">Pontuar</a>
                                     </td>
                                 </tr>	
                             <?php endforeach; ?>

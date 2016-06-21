@@ -28,7 +28,7 @@
                     echo "<div class='alert alert-danger' role='alert'>Erro ao Adicionar Pontos...!</div> ";
                 endif;
                 
-                echo "<meta http-equiv=refresh content='3;URL=Pontuacao.php'>";
+                echo "<meta http-equiv=refresh content='3;URL=Dash.php'>";
             else :
                 echo "<div class='alert alert-success' role='alert'>Ops! Nao pegeuei os Pontos!! ...</div> ";
             endif;
@@ -51,7 +51,7 @@
                 echo "<div class='alert alert-danger' role='alert'>Erro ao Recolher Pontos...!</div> ";
             endif;
             
-            echo "<meta http-equiv=refresh content='3;URL=Pontuacao.php'>";
+            echo "<meta http-equiv=refresh content='3;URL=Dash.php'>";
            
             endif;
             

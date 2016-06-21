@@ -1,39 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-<script>
-    
+        <script>
+
         </script>        
         <?php
         require './classes/Conexao.php';
         require_once('./dao/seguranca.php');
         protegePagina();
-// Recebe o termo de pesquisa se existir
-        $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
+// Recebe o id do cliente do cliente via GET
+        $id_cliente = (isset($_GET['id'])) ? $_GET['id'] : '';
 
-// Verifica se o termo de pesquisa está vazio, se estiver executa uma consulta completa
-        if (empty($termo)):
+// Valida se existe um id e se ele é numérico
+        if (!empty($id_cliente) && is_numeric($id_cliente)):
 
+            // Captura os dados do cliente solicitado
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo, cli_visitas, cli_ptototal, (cli_ptototal - cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_celular, cli_status, cli_foto FROM clientes ;';
+            $sql = 'SELECT cli_codigo,cli_visitas,cli_ptototal ,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto,cli_endereco,cli_cidade, cli_uf, cli_cep, cli_codcard FROM clientes WHERE cli_codigo = '.$id_cliente;
             $stm = $conexao->prepare($sql);
+            //$stm->bindValue(':id', $id_cliente);
             $stm->execute();
-            $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
-        else:
-
-            // Executa uma consulta baseada no termo de pesquisa passado como parâmetro
-            $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo, cli_visitas, cli_ptototal,(cli_ptototal - cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email';
-            $stm = $conexao->prepare($sql);
-            $stm->bindValue(':cli_nome', $termo . '%');
-            $stm->bindValue(':cli_email', $termo . '%');
-            $stm->execute();
-            $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
+            $cliente = $stm->fetch(PDO::FETCH_OBJ);
 
         endif;
-            
-       
-        ?>
+
+            ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Painel - Tony Silva</title>
@@ -71,9 +62,9 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
                                 <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-                                
+
                                 <li><a href="logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-                            
+
                             </ul>
                         </li>
                     </ul>
@@ -117,53 +108,55 @@
                             <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome ou E-mail">
                         </div>
                         <button type="submit" class="btn btn-primary">Pesquisar</button>
-                        <a href='Pontuacao.php.php' class="btn btn-primary">Ver Todos</a>
+                        <a href='Dash.php' class="btn btn-primary">Ver Todos</a>
                     </form>
 
                     <!-- Link para página de cadastro -->
 
                     <div class='clearfix'></div>
 
-<?php if (!empty($clientes)): ?>
-                    <form action="pontuar.php" method="get" name="form" >
-                        <!-- Tabela de Clientes -->
-                        <table class="table table-striped">
-                            <tr class='active' >
-                                <th>Foto</th>
-                                <th>Nome</th>
-                                <th>Visitas</th>
-                                <th>Pontos</th>
-                                <th>Disponivel</th>
-                                <th>Pontuar/Recolher</th>
-                                <th>Ação</th>
-                            </tr>
-    <?php foreach ($clientes as $cliente): ?>
+<?php if (!empty($cliente)): ?>
+                        <form action="pontuar.php?id&pontos" method="get" name="form" >
+                            <!-- Tabela de Clientes -->
+                            <table class="table table-striped">
+                                <tr class='active' >
+                                    <th>Foto</th>
+                                    <th>Nome</th>
+                                    <th>Visitas</th>
+                                    <th>Pontos</th>
+                                    <th>Disponivel</th>
+                                    <th>Pontuar/Recolher</th>
+                                    <th>Ação</th>
+                                </tr>
+                               
+                                    
+                                    
                                 <tr>
-                                    <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
-                                <input type="hidden" id="codigo" name="codigo" value="<?=$cliente->cli_codigo?>">
+                                        <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
+                                    <input type="hidden" id="codigo" name="codigo" value="<?= $cliente->cli_codigo ?>">
                                     <td><?= $cliente->cli_nome ?></td>
-                                    <td><?= $cliente->cli_visitas?></td>
-                                    <td><?= $cliente->cli_ptototal?></td>
-                                    <td><?= $cliente->cli_ptodisp?></td>
+                                    <td><?= $cliente->cli_visitas ?></td>
+                                    <td><?= $cliente->cli_ptototal ?></td>
+                                    <td><?= $cliente->cli_ptodisp ?></td>
                                     <td><input id="pontos" name="pontos" type="text" ></td>
                                     <td>
-                                        
-                                        <button type="submit" class="btn btn-primary " name="pontuar" value="pontua" onclick="validaval()" >Pontuar</button>>
-                                        <button type="submit" class="btn btn-danger " name="recolher" value="recolhe">Recolher</button>> 
+
+                                        <button class="btn btn-primary" name="pontuar" value="pontua" onclick="validaval()" >Pontuar</button>
+                                        <button type="submit" class="btn btn-danger " name="recolher" value="recolhe">Recolher</button> 
                                     </td>
-                                </tr>	
-    <?php endforeach; ?>
-                        </table>
+                                    </tr>	
+    
+                            </table>
 
-                        <?php else: ?>
+<?php else: ?>
 
-                        <!-- Mensagem caso não exista clientes ou não encontrado  -->
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Atenção!</strong> Não existem Aniversariantes Para o mês Corrente!
-                        </div>
-                        <h3 class="text-center text-primary"></h3>
+                            <!-- Mensagem caso não exista clientes ou não encontrado  -->
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Atenção!</strong> Não existem pontos para o usuario!
+                            </div>
+                            <h3 class="text-center text-primary"></h3>
 <?php endif; ?>
-          </form>
+                    </form>
                 </fieldset>
             </div>
 
@@ -172,9 +165,9 @@
             <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
             <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
             <script>
-                $(function () {
-                    $('.dropdown-toggle').dropdown();
-                   });
+            $(function () {
+                $('.dropdown-toggle').dropdown();
+            });
             </script>
 
 
