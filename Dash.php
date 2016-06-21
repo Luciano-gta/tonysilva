@@ -93,12 +93,12 @@
                 </div>
             </form>
             <ul class="nav menu">
-                <li class="active"><a href="Dash.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Inicio</a></li>
-                <li role="presentation" class="divider"></li>
+                <li class="active"><a href="Dash.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg>Inicio</a></li>
+                <!--<li role="presentation" class="divider"></li> -->
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
-                <li role="presentation" class="divider"></li>
+                <!--<li role="presentation" class="divider"></li> -->
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Rel. Aniversariantes</a></li>
-                <li role="presentation" class="divider"></li>
+                <!-- <li role="presentation" class="divider"></li> -->
                 <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
             </ul>
         </div><!--/.sidebar-->
@@ -181,12 +181,13 @@
                     <!-- Formulário de Pesquisa -->
                     <form action="" method="get" id='form-contato' class="form-horizontal col-md-10">
                         <label class="col-md-2 control-label" for="termo">Pesquisar</label>
-                        <div class='col-md-7'>
+                        <div class='col-xs-4'>
                             <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome ou E-mail">
                         </div>
                         <button type="submit" class="btn btn-primary">Pesquisar</button>
-                        <a href='Cadastro_clientes.php' class="btn btn-success pull-right">Cadastrar Cliente</a>
+                        <a href='Cadastro_clientes.php' class="btn btn-success pull-right ">Cadastrar Cliente</a>
                         <a href='Dash.php' class="btn btn-primary">Ver Todos</a>
+                        <a href='Pontuacao.php' class="btn btn-warning">Pontuar</a>
                         <!-- Link para página de cadastro -->
                         
                     </form>

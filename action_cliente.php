@@ -25,8 +25,11 @@
 		$telefone  		  = (isset($_POST['telefone'])) ? str_replace(array('-', ' '), '', $_POST['telefone']) : '';
 		$celular   		  = (isset($_POST['celular'])) ? str_replace(array('-', ' '), '', $_POST['celular']) : '';
 		$status    		  = (isset($_POST['status'])) ? $_POST['status'] : ''; 
-                $Pontos    		  = (isset($_POST['Pontos'])) ? $_POST['Pontos'] : '';
-
+                $endereco    		  = (isset($_POST['endereco'])) ? $_POST['endereco'] : '';
+                $cidade    		  = (isset($_POST['cidade'])) ? $_POST['cidade'] : '';
+                $uf     		  = (isset($_POST['uf'])) ? $_POST['uf'] : '';
+                $cep    		  = (isset($_POST['cep'])) ? $_POST['cep'] : '';
+                $cod_card    		  = (isset($_POST['cod_card'])) ? $_POST['cod_card'] : '';
 		// Valida os dados recebidos
 		$mensagem = '';
 		if ($acao == 'editar' && $id == ''):
@@ -122,8 +125,8 @@
 			     endif;  
 			endif;
 
-			$sql = 'INSERT INTO clientes (cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto)
-                                        VALUES(:nome, :email, :cpf, :data_nascimento, :telefone, :celular, :status, :foto)';
+			$sql = 'INSERT INTO clientes (cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto,cli_endereco,cli_cidade, cli_uf, cli_cep, cli_codcard)
+                                        VALUES(:nome, :email, :cpf, :data_nascimento, :telefone, :celular, :status, :foto, :endereco, :cidade, :uf, :cep, :cod_card)';
 
 			$stm = $conexao->prepare($sql);
 			$stm->bindValue(':nome', $nome);
@@ -134,7 +137,12 @@
 			$stm->bindValue(':celular', $celular);
 			$stm->bindValue(':status', $status);
 			$stm->bindValue(':foto', $nome_foto);
-			$retorno = $stm->execute();
+			$stm->bindValue(':endereco', $endereco);
+                        $stm->bindValue(':cidade', $cidade);
+                        $stm->bindValue(':uf', $uf);
+                        $stm->bindValue(':cep', $cep);
+                        $stm->bindValue(':cod_card', $cod_card);
+                        $retorno = $stm->execute();
 
 			if ($retorno):
 				echo "<div class='alert alert-success' role='alert'>Registro inserido com sucesso, aguarde você está sendo redirecionado ...</div> ";
@@ -187,7 +195,7 @@
 
 			endif;
 
-			$sql = 'UPDATE clientes SET cli_nome=:nome, cli_email=:email, cli_cpf=:cpf, cli_data_nascimento=:data_nascimento, cli_telefone=:telefone, cli_celular=:celular, cli_status=:status, cli_foto=:foto ';
+			$sql = 'UPDATE clientes SET cli_nome=:nome, cli_email=:email, cli_cpf=:cpf, cli_data_nascimento=:data_nascimento, cli_telefone=:telefone, cli_celular=:celular, cli_status=:status, cli_foto=:foto,cli_endereco=:endereco,cli_cidade=:cidade, cli_uf=:uf, cli_cep=:cep, cli_codcard=:cod_card ';
 			$sql .= 'WHERE cli_codigo = :id';
 
 			$stm = $conexao->prepare($sql);
@@ -200,7 +208,12 @@
 			$stm->bindValue(':status', $status);
 			$stm->bindValue(':foto', $nome_foto);
 			$stm->bindValue(':id', $id);
-			$retorno = $stm->execute();
+			$stm->bindValue(':endereco', $endereco);
+                        $stm->bindValue(':cidade', $cidade);
+                        $stm->bindValue(':uf', $uf);
+                        $stm->bindValue(':cep', $cep);
+                        $stm->bindValue(':cod_card', $cod_card);
+                        $retorno = $stm->execute();
 
 			if ($retorno):
 				echo "<div class='alert alert-success' role='alert'>Registro editado com sucesso, aguarde você está sendo redirecionado ...</div> ";

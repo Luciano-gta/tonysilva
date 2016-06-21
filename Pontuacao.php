@@ -117,7 +117,7 @@
                             <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome ou E-mail">
                         </div>
                         <button type="submit" class="btn btn-primary">Pesquisar</button>
-                        <a href='Dash.php' class="btn btn-primary">Ver Todos</a>
+                        <a href='Pontuacao.php.php' class="btn btn-primary">Ver Todos</a>
                     </form>
 
                     <!-- Link para página de cadastro -->
