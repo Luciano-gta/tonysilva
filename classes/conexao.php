@@ -14,11 +14,17 @@
  */
 define('SGBD', 'mysql');
 define('HOST', 'localhost');
-define('DBNAME', 'tony');
+define('DBNAME', 'tonys964_tony');
 define('CHARSET', 'utf8');
-define('USER', 'root');
-define('PASSWORD', '');
+define('USER', 'tonys964_tony');
+define('PASSWORD', 'tony@321');
 define('SERVER', 'linux');
+
+/*$checkurl = filter_input(INPUT_GET, 'PHP_SELF');
+
+if (preg_match("/conexao.php/i", "$checkurl")) {
+        header("Location: ../login.html");
+}*/
 
 class conexao {
     

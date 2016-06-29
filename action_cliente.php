@@ -98,7 +98,7 @@
 			$nome_foto = 'padrao.jpg';
 			if(isset($_FILES['foto']) && $_FILES['foto']['size'] > 0):  
 
-				$extensoes_aceitas = array('bmp' ,'png', 'svg', 'jpeg', 'jpg');
+		            $extensoes_aceitas = array('bmp' ,'png', 'svg', 'jpeg', 'jpg');
 			    $extensao = strtolower(end(explode('.', $_FILES['foto']['name'])));
 
 			     // Validamos se a extensão do arquivo é aceita
@@ -240,8 +240,9 @@
 			endif;
 
 			// Exclui o registro do banco de dados
-			$sql = 'DELETE FROM clientes WHERE cli_codigo = :id';
-			$stm = $conexao->prepare($sql);
+			//$sql = 'DELETE FROM clientes WHERE cli_codigo = :id';
+			$sql = 'update clientes set cli_status = "INATIVO" WHERE cli_codigo = :id';
+                        $stm = $conexao->prepare($sql);
 			$stm->bindValue(':id', $id);
 			$retorno = $stm->execute();
 

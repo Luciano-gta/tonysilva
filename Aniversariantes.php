@@ -84,7 +84,6 @@
             </form>
             <ul class="nav menu">
                 <li class="active"><a href="Dash.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Inicio</a></li>
-                <li role="presentation" class="divider"></li>
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
                 <li role="presentation" class="divider"></li>
                 <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
@@ -95,7 +94,7 @@
             <div class="row">
                 <ol class="breadcrumb">
                     <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-                    <li class="active">Listagem Aniversatiantes</li>
+                    <li class="active">Listagem Aniversariantes</li>
                 </ol>
             </div><!--/.row-->
 
