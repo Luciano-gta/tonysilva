@@ -2,7 +2,7 @@
 <html>
     <head>
         <?php
-        require './classes/Conexao.php';
+        require './classes/conexao.php';
         require_once('./dao/seguranca.php');
         protegePagina();
 // Recebe o termo de pesquisa se existir
@@ -87,7 +87,7 @@
                 <li class="active"><a href="Dash.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg>Inicio</a></li>
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
                 <li role="presentation" class="divider"></li>
-                <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+                <li><a href="login.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
             </ul>
         </div><!--/.sidebar-->
 

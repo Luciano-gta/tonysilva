@@ -23,7 +23,7 @@ define('SERVER', 'linux');
 /*$checkurl = filter_input(INPUT_GET, 'PHP_SELF');
 
 if (preg_match("/conexao.php/i", "$checkurl")) {
-        header("Location: ../login.html");
+        header("Location: ../login.php");
 }*/
 
 class conexao {

@@ -65,7 +65,7 @@ if ($_POST['cadastrar']) {
 
             // Se os dados forem inseridos com sucesso
             if ($sql) {
-                //echo"<script language='javascript' type='text/javascript'>alert('Usuário Cadastrado com sucesso!!');window.location.href='../login.html';</script>";
+                //echo"<script language='javascript' type='text/javascript'>alert('Usuário Cadastrado com sucesso!!');window.location.href='../login.php';</script>";
                 
             }
         }

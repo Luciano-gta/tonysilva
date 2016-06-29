@@ -11,9 +11,7 @@ $pasta = dirname(__FILE__);
 // Teste
 //require_once($pasta."/db.inc.php");
 //Classes
-require_once($pasta . "/../classes/Conexao.php");
-
-
+require_once($pasta . "/../classes/conexao.php");
 
 //  Configurações do Script
 // ==============================
@@ -22,20 +20,15 @@ $_SG['abreSessao'] = true;         // Inicia a sessão com um session_start()?
 $_SG['caseSensitive'] = false;     // Usar case-sensitive? Onde 'thiago' é diferente de 'THIAGO'
 $_SG['validaSempre'] = true;       // Deseja validar o usuário e a senha a cada carregamento de página?
 // Evita que, ao mudar os dados do usuário no banco de dado o mesmo contiue logado.
-$_SG['paginaLogin'] = 'login.html'; // Página de login
+$_SG['paginaLogin'] = 'login.php'; // Página de login
 $_SG['tabela'] = 'usuarios';       // Nome da tabela onde os usuários são salvos
 // ==============================
 // ======================================
 //   ~ Não edite a partir deste ponto ~
 // ======================================
-// Verifica se precisa iniciar a sessão
-if ($_SG['abreSessao'] == true) {
+if(session_status()== PHP_SESSION_NONE  ){
     session_start();
 }
-    
-    
-
-
 /**
  * Função que valida um usuário e senha
  *
@@ -72,6 +65,7 @@ function validaUsuario($usuario, $senha) {
             // Definimos dois valores na sessão com os dados do login
             $_SESSION['usuarioLogin'] = $usuario;
             $_SESSION['usuarioSenha'] = $senha;
+            // Verifica se precisa iniciar a sessão
         }
         return true;
     }
@@ -106,5 +100,5 @@ function expulsaVisitante() {
     unset($_SESSION['usuarioID'], $_SESSION['usuarioNome'], $_SESSION['usuarioLogin'], $_SESSION['usuarioSenha']);
     // Manda pra tela de login
     //header("Location: " .$_SERVER['DOCUMENT_ROOT']);
-    header('Location: login.html');
+    header('Location: login.php');
 }

@@ -12,7 +12,7 @@
   session_destroy();
     // Manda pra tela de login
   //header("Location: " .$_SERVER['DOCUMENT_ROOT']);
-    header('Location: login.html'); 
+    header('Location: login.php'); 
 ?>
 
 

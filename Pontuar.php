@@ -7,7 +7,7 @@
     </head>
     <body>
         <?php
-        require './classes/Conexao.php';
+        require './classes/conexao.php';
 
         $pontos = (isset($_GET['pontos'])) ? $_GET['pontos'] : '';
         $id = (isset($_GET['codigo'])) ? $_GET['codigo'] : '';

@@ -3,7 +3,7 @@
     <head>
         <?php
         // Inclui o arquivo com o sistema de seguran�a
-        require_once('./classes/Conexao.php');
+        require_once('./classes/conexao.php');
         require_once('dao/seguranca.php');
         protegePagina();
 // Recebe o id do cliente do cliente via GET
@@ -85,7 +85,7 @@
             <ul class="nav menu">
                 <li class="active"><a href="Dash.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Inicio</a></li>
                 <li role="presentation" class="divider"></li>
-                <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+                <li><a href="login.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
             </ul>
         </div><!--/.sidebar-->
 
