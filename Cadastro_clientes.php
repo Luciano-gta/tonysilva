@@ -104,7 +104,7 @@
 
                         <div class="form-group">
                             <label for="cod_card">Cod. Cartão</label>
-                            <input type="text" class="form-control" id="cod_cart" name="cod_cart" placeholder="Informe o codigo do cartão">
+                            <input type="text" class="form-control" id="cod_card" name="cod_card" placeholder="Informe o codigo do cartão">
                             <!-- para validacao <span class='msg-erro msg-email'></span> -->
                         </div>
 

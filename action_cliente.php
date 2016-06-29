@@ -99,8 +99,8 @@
 			if(isset($_FILES['foto']) && $_FILES['foto']['size'] > 0):  
 
 		            $extensoes_aceitas = array('bmp' ,'png', 'svg', 'jpeg', 'jpg');
-			    $extensao = strtolower(end(explode('.', $_FILES['foto']['name'])));
-
+			    $tmp_file = explode('.', $_FILES['foto']['name']);
+                            $extensao = strtolower(end($tmp_file));
 			     // Validamos se a extensão do arquivo é aceita
 			    if (array_search($extensao, $extensoes_aceitas) === false):
 			       echo "<h1>Extensão Inválida!</h1>";
@@ -116,7 +116,7 @@
 			          endif;  
 			  
 			          // Monta o caminho de destino com o nome do arquivo  
-			          $nome_foto = date('dmY') . '_' . $_FILES['foto']['name'];  
+			          $nome_foto = date('dmYHis') . '_' . $_FILES['foto']['name'];  
 			            
 			          // Essa função move_uploaded_file() copia e verifica se o arquivo enviado foi copiado com sucesso para o destino  
 			          if (!move_uploaded_file($_FILES['foto']['tmp_name'], 'fotos/'.$nome_foto)):  
@@ -165,7 +165,10 @@
 				endif;
 
 				$extensoes_aceitas = array('bmp' ,'png', 'svg', 'jpeg', 'jpg');
-			    $extensao = strtolower(end(explode('.', $_FILES['foto']['name'])));
+			    //$extensao = strtolower(end(explode('.', $_FILES['foto']['name'])));
+                            $tmp_file = explode('.', $_FILES['foto']['name']);
+                            $extensao = strtolower(end($tmp_file));
+
 
 			     // Validamos se a extensão do arquivo é aceita
 			    if (array_search($extensao, $extensoes_aceitas) === false):
@@ -182,7 +185,7 @@
 			          endif;  
 			  
 			          // Monta o caminho de destino com o nome do arquivo  
-			          $nome_foto = date('dmY') . '_' . $_FILES['foto']['name'];  
+			          $nome_foto = date('dmYHis') . '_' . $_FILES['foto']['name'];  
 			            
 			          // Essa função move_uploaded_file() copia e verifica se o arquivo enviado foi copiado com sucesso para o destino  
 			          if (!move_uploaded_file($_FILES['foto']['tmp_name'], 'fotos/'.$nome_foto)):  
@@ -227,18 +230,20 @@
 
 		// Verifica se foi solicitada a exclusão dos dados
 		if ($acao == 'excluir'):
-
-			// Captura o nome da foto para excluir da pasta
+                        
+                        //Não será mais revomido a foto, pois os clientes não serão excluidos e sim inativados
+                        /*			
+                        // Captura o nome da foto para excluir da pasta
 			$sql = "SELECT cli_foto FROM clientes WHERE cli_codigo = :id AND cli_foto <> 'padrao.jpg'";
 			$stm = $conexao->prepare($sql);
 			$stm->bindValue(':id', $id);
 			$stm->execute();
 			$cliente = $stm->fetch(PDO::FETCH_OBJ);
-
+                        
 			if (!empty($cliente) && file_exists('fotos/'.$cliente->foto)):
 				unlink("fotos/" . $cliente->foto);
 			endif;
-
+                        */
 			// Exclui o registro do banco de dados
 			//$sql = 'DELETE FROM clientes WHERE cli_codigo = :id';
 			$sql = 'update clientes set cli_status = "INATIVO" WHERE cli_codigo = :id';

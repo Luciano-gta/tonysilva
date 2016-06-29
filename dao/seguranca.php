@@ -30,10 +30,10 @@ $_SG['tabela'] = 'usuarios';       // Nome da tabela onde os usuários são salv
 // ======================================
 // Verifica se precisa iniciar a sessão
 if ($_SG['abreSessao'] == true) {
-    
+    session_start();
 }
     
-    session_start();
+    
 
 
 /**
@@ -91,7 +91,7 @@ function protegePagina() {
             // Verifica se os dados salvos na sessão batem com os dados do banco de dados
             if (!validaUsuario($_SESSION['usuarioLogin'], $_SESSION['usuarioSenha'])) {
                 // Os dados não batem, manda pra tela de login
-               // expulsaVisitante();
+               expulsaVisitante();
             }
         }
     }

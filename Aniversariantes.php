@@ -12,7 +12,7 @@
         if (empty($termo)):
 
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_celular, cli_status, cli_foto FROM clientes where Month(cli_data_nascimento) = Month(Now())';
+            $sql = 'SELECT (cli_ptototal-cli_ptousado) as cli_ptodisp, cli_codigo, cli_nome, cli_email, cli_celular, cli_status, cli_foto, cli_codcard FROM clientes where Month(cli_data_nascimento) = Month(Now()) and cli_status = "ATIVO"';
             $stm = $conexao->prepare($sql);
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -20,10 +20,11 @@
 
             // Executa uma consulta baseada no termo de pesquisa passado como parâmetro
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email';
+            $sql = 'SELECT cli_codigo,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_celular, cli_status,cli_foto,cli_codcard FROM clientes WHERE cli_status = "ATIVO" and cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email OR cli_codcard LIKE :cli_codcard';
             $stm = $conexao->prepare($sql);
-            $stm->bindValue(':cli_nome', $termo . '%');
-            $stm->bindValue(':cli_email', $termo . '%');
+            $stm->bindValue(':cli_nome', '%' .$termo . '%');
+            $stm->bindValue(':cli_email', '%' .$termo . '%');
+            $stm->bindValue(':cli_codcard', '%' .$termo . '%');
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
 
@@ -83,7 +84,7 @@
                 </div>
             </form>
             <ul class="nav menu">
-                <li class="active"><a href="Dash.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Inicio</a></li>
+                <li class="active"><a href="Dash.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg>Inicio</a></li>
                 <li class="active"><a href="Aniversariantes.php"><svg class="glyph stroked address-book"><use xlink:href="#landed-address-book"></use></svg>Aniversariantes</a></li>
                 <li role="presentation" class="divider"></li>
                 <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
@@ -108,7 +109,7 @@
                     <form action="" method="get" id='form-contato' class="form-horizontal col-md-10">
                         <label class="col-md-2 control-label" for="termo">Pesquisar</label>
                         <div class='col-md-7'>
-                            <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome ou E-mail">
+                            <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome, Cod. Cartão ou E-mail">
                         </div>
                         <button type="submit" class="btn btn-primary">Pesquisar</button>
                         <a href='Dash.php' class="btn btn-primary">Ver Todos</a>
@@ -126,17 +127,17 @@
                                 <th>Foto</th>
                                 <th>Nome</th>
                                 <th>E-mail</th>
+                                <th>Saldo Pontos</th>
                                 <th>Celular</th>
-                                <th>Status</th>
-                                <th>Ação</th>
+                                <th>Ações</th>
                             </tr>
                             <?php foreach ($clientes as $cliente): ?>
                                 <tr>
                                     <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
                                     <td><?= $cliente->cli_nome ?></td>
                                     <td><?= $cliente->cli_email ?></td>
+                                    <td><?= $cliente->cli_ptodisp ?></td>
                                     <td><?= $cliente->cli_celular ?></td>
-                                    <td><?= $cliente->cli_status ?></td>
                                     <td>
                                         <a href='Editar_clientes.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-primary">Editar</a>
                                         <a href='javascript:void(0)' class="btn btn-danger link_exclusao" rel="<?= $cliente->cli_codigo ?>">Excluir</a>

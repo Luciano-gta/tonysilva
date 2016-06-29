@@ -16,15 +16,14 @@
 
             // Captura os dados do cliente solicitado
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo,cli_visitas,cli_ptototal ,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto,cli_endereco,cli_cidade, cli_uf, cli_cep, cli_codcard FROM clientes WHERE cli_codigo = '.$id_cliente;
+            $sql = 'SELECT cli_codigo,cli_visitas,cli_ptototal ,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_cpf, cli_data_nascimento, cli_telefone, cli_celular, cli_status, cli_foto,cli_endereco,cli_cidade, cli_uf, cli_cep, cli_codcard FROM clientes WHERE cli_codigo = ' . $id_cliente;
             $stm = $conexao->prepare($sql);
             //$stm->bindValue(':id', $id_cliente);
             $stm->execute();
             $cliente = $stm->fetch(PDO::FETCH_OBJ);
 
         endif;
-
-            ?>
+        ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Painel - Tony Silva</title>
@@ -115,7 +114,7 @@
 
                     <div class='clearfix'></div>
 
-<?php if (!empty($cliente)): ?>
+                    <?php if (!empty($cliente)): ?>
                         <form action="pontuar.php?id&pontos" method="get" name="form" >
                             <!-- Tabela de Clientes -->
                             <table class="table table-striped">
@@ -128,34 +127,34 @@
                                     <th>Pontuar/Recolher</th>
                                     <th>Ação</th>
                                 </tr>
-                               
-                                    
-                                    
-                                <tr>
-                                        <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
-                                    <input type="hidden" id="codigo" name="codigo" value="<?= $cliente->cli_codigo ?>">
-                                    <td><?= $cliente->cli_nome ?></td>
-                                    <td><?= $cliente->cli_visitas ?></td>
-                                    <td><?= $cliente->cli_ptototal ?></td>
-                                    <td><?= $cliente->cli_ptodisp ?></td>
-                                    <td><input id="pontos" name="pontos" type="text" ></td>
-                                    <td>
 
-                                        <button class="btn btn-primary" name="pontuar" value="pontua" onclick="validaval()" >Pontuar</button>
-                                        <button type="submit" class="btn btn-danger " name="recolher" value="recolhe">Recolher</button> 
-                                    </td>
-                                    </tr>	
-    
+
+
+                                <tr>
+                                    <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
+                                <input type="hidden" id="codigo" name="codigo" value="<?= $cliente->cli_codigo ?>">
+                                <td><?= $cliente->cli_nome ?></td>
+                                <td><?= $cliente->cli_visitas ?></td>
+                                <td><?= $cliente->cli_ptototal ?></td>
+                                <td><?= $cliente->cli_ptodisp ?></td>
+                                <td><input id="pontos" name="pontos" type="text" ></td>
+                                <td>
+
+                                    <button class="btn btn-primary" name="pontuar" value="pontua" onclick="validaval()" >Pontuar</button>
+                                    <button type="submit" class="btn btn-danger " name="recolher" value="recolhe" onclick="validaRecolher()">Recolher</button> 
+                                </td>
+                                </tr>	
+
                             </table>
 
-<?php else: ?>
+                        <?php else: ?>
 
                             <!-- Mensagem caso não exista clientes ou não encontrado  -->
                             <div class="alert alert-danger" role="alert">
                                 <strong>Atenção!</strong> Não existem pontos para o usuario!
                             </div>
                             <h3 class="text-center text-primary"></h3>
-<?php endif; ?>
+                        <?php endif; ?>
                     </form>
                 </fieldset>
             </div>

@@ -15,7 +15,7 @@
         if (empty($termo)):
 
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo,(cli_ptototal-cli_ptousado) as cli_ptodisp,cli_visitas as cli_vistot , cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes where cli_status = "ATIVO"';
+            $sql = 'SELECT cli_codigo,(cli_ptototal-cli_ptousado) as cli_ptodisp,cli_visitas as cli_vistot , cli_nome, cli_email, cli_telefone, cli_status,cli_foto,cli_codcard FROM clientes where cli_status = "ATIVO"';
             $stm = $conexao->prepare($sql);
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -24,17 +24,18 @@
 
             // Executa uma consulta baseada no termo de pesquisa passado como parâmetro
             $conexao = conexao::getInstance();
-            $sql = 'SELECT cli_codigo,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email';
+            $sql = 'SELECT cli_codigo,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_telefone, cli_status,cli_foto,cli_codcard FROM clientes WHERE cli_status = "ATIVO" and cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email OR cli_codcard LIKE :cli_codcard';
             $stm = $conexao->prepare($sql);
-            $stm->bindValue(':cli_nome', $termo . '%');
-            $stm->bindValue(':cli_email', $termo . '%');
+            $stm->bindValue(':cli_nome', '%' .$termo . '%');
+            $stm->bindValue(':cli_email', '%' .$termo . '%');
+            $stm->bindValue(':cli_codcard', '%' .$termo . '%');
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
 
         endif;
         // Para o DASH
         $conexao = conexao::getInstance();
-        $sql = 'SELECT cli_codigo,sum(cli_visitas) as cli_vistot , cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes';
+        $sql = 'SELECT cli_codigo,sum(cli_visitas) as cli_vistot ,count(cli_codigo)  as cli_total, cli_nome, cli_email, cli_telefone, cli_status,cli_foto, cli_codcard FROM clientes WHERE cli_status = "ATIVO"';
         $stm = $conexao->prepare($sql);
         $stm->execute();
         $dash = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -149,7 +150,7 @@
                                     <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
                                 </div>
                                 <div class="col-sm-9 col-lg-7 widget-right">
-                                    <div class="large">24</div>
+                                    <div class="large"><?= $dashs->cli_total ?></div>
                                     <div class="text-muted">Clientes</div>
                                 </div>
                             </div>
@@ -181,7 +182,7 @@
                     <form action="" method="get" id='form-contato' class="form-horizontal col-md-10">
                         <label class="col-md-2 control-label" for="termo">Pesquisar</label>
                         <div class='col-xs-4'>
-                            <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome ou E-mail">
+                            <input type="text" class="form-control" id="termo" name="termo" placeholder="Infome o Nome, Cod. Cartão ou E-mail">
                         </div>
                         <button type="submit" class="btn btn-primary">Pesquisar</button>
                         <a href='Cadastro_clientes.php' class="btn btn-success pull-right ">Cadastrar Cliente</a>
@@ -202,9 +203,9 @@
                                 <th>Foto</th>
                                 <th>Nome</th>
                                 <th>E-mail</th>
-                                <th>Pontos</th>
-                                <th>Status</th>
-                                <th>Ação</th>
+                                <th>Saldo Pontos</th>
+                                <th>Cod. Cartão</th>
+                                <th>Ações</th>
                             </tr>
                             <?php foreach ($clientes as $cliente): ?>
                                 <tr>
@@ -212,7 +213,7 @@
                                     <td><?= $cliente->cli_nome ?></td>
                                     <td><?= $cliente->cli_email ?></td>
                                     <td><?= $cliente->cli_ptodisp ?></td>
-                                    <td><?= $cliente->cli_telefone ?></td>
+                                    <td><?= $cliente->cli_codcard ?></td>
 
                                     <td>
                                         <a href='Editar_clientes.php?id=<?= $cliente->cli_codigo ?>' class="btn btn-primary">Editar</a>
