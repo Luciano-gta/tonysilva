@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/style_img.css" />
         <?php
         require './classes/conexao.php';
         require_once('./dao/seguranca.php');
@@ -25,9 +26,9 @@
             $conexao = conexao::getInstance();
             $sql = 'SELECT cli_codigo,(cli_ptototal-cli_ptousado) as cli_ptodisp, cli_nome, cli_email, cli_telefone, cli_status,cli_foto,cli_codcard FROM clientes WHERE cli_status = "ATIVO" and cli_nome LIKE :cli_nome OR cli_email LIKE :cli_email OR cli_codcard LIKE :cli_codcard';
             $stm = $conexao->prepare($sql);
-            $stm->bindValue(':cli_nome', '%' .$termo . '%');
-            $stm->bindValue(':cli_email', '%' .$termo . '%');
-            $stm->bindValue(':cli_codcard', '%' .$termo . '%');
+            $stm->bindValue(':cli_nome', '%' . $termo . '%');
+            $stm->bindValue(':cli_email', '%' . $termo . '%');
+            $stm->bindValue(':cli_codcard', '%' . $termo . '%');
             $stm->execute();
             $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
 
@@ -59,7 +60,7 @@
         </style>
     </head>
 
-    <body>
+    <body id="dash">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -208,7 +209,15 @@
                             </tr>
                             <?php foreach ($clientes as $cliente): ?>
                                 <tr>
-                                    <td><img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'></td>
+                                    <td>
+                                        <a href="#<?= $cliente->cli_codigo ?>">
+                                        <img src='fotos/<?= $cliente->cli_foto ?>' height='40' width='40'>
+                                        </a>
+                                        <div class="lb-overlay" id="<?= $cliente->cli_codigo ?>">
+                                            <a href="#dash" class="lb-close">Fechar</a>
+                                            <img src='fotos/<?= $cliente->cli_foto ?>'  />
+                                        </div>
+                                    </td>
                                     <td><?= $cliente->cli_nome ?></td>
                                     <td><?= $cliente->cli_email ?></td>
                                     <td><?= $cliente->cli_ptodisp ?></td>

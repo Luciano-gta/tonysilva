@@ -5,7 +5,7 @@
 
         </script>        
         <?php
-        require './classes/Conexao.php';
+        require './classes/conexao.php';
         require_once('./dao/seguranca.php');
         protegePagina();
 // Recebe o id do cliente do cliente via GET
