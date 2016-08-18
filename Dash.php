@@ -219,7 +219,7 @@
                                         </div>
                                     </td>
                                     <td><?= $cliente->cli_nome ?></td>
-                                    <td><?= $cliente->cli_email ?></td>
+                                    <td><a href='mailto:<?= $cliente->cli_email ?>'><?= $cliente->cli_email ?></a></td>
                                     <td><?= $cliente->cli_ptodisp ?></td>
                                     <td><?= $cliente->cli_codcard ?></td>
 

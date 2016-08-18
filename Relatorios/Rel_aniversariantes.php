@@ -32,7 +32,7 @@ require_once("../classes/fpdf/fpdf.php");
 require_once '../classes/conexao.php';
 //CONECTA
 $conexao = conexao::getInstance();
-$sql = 'SELECT cli_codigo,cli_visitas as cli_vistot , cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes';
+$sql = 'SELECT cli_codigo,cli_visitas as cli_vistot , cli_nome, cli_email, cli_telefone, cli_status,cli_foto FROM clientes WHERE cli_status = "ATIVO"';
 $stm = $conexao->prepare($sql);
 $stm->execute();
 $clientes = $stm->fetchAll(PDO::FETCH_OBJ);
